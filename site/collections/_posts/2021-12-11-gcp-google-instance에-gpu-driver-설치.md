@@ -17,7 +17,7 @@ image:
 
 2\. 설치 스크립트를 다운로드
 
-\`\`\`curl https://raw.githubusercontent.com/GoogleCloudPlatform/compute-gpu-installation/main/linux/install\_gpu\_driver.py --output install\_gpu\_driver.py\`\`\`
+\`\`\`curl https://raw.githubusercontent.com/GoogleCloudPlatform/compute-gpu-installation/main/linux/install\_gpu\_driver.py –output install\_gpu\_driver.py\`\`\`
 
 3\. 설치 스크립트를 실행
 
