@@ -1,4 +1,4 @@
-title: Vonge
+title: Woohyeon
 
 plugins:
   - jekyll-bookshop
@@ -25,7 +25,7 @@ _array_structures:
   content_blocks:
     style: modal
 
-collections_dir: 'collections'
+collections_dir: "collections"
 
 collections:
   pages:
@@ -43,12 +43,12 @@ collections:
 cloudcannon:
   collections:
     pages:
-      _icon: 'wysiwyg'
+      _icon: "wysiwyg"
     projects:
-      _icon: 'work_outline'
+      _icon: "work_outline"
       _subtext_key: subtitle
     testimonials:
-      _icon: 'format_quote'
+      _icon: "format_quote"
       _subtext_key: position
       _enabled_editors:
         - data
@@ -85,7 +85,6 @@ defaults:
       type: posts
     values:
       layout: post
-
 
 # Tags
 tag_page_dir: tag
