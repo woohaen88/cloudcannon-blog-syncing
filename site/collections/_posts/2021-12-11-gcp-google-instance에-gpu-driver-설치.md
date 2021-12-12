@@ -52,6 +52,8 @@ sudo apt remove nvidia-driver-{gpu 버전}
 sudo reboot now # 재부팅을 하지 않으면 적용되지 않는다.
 ```
 
+<hr>
+
 ## 2. GPU 측정항목 모니터링 설정
 
 기본적으로 **Google Cloud Platform**에는 다양한 리소스 모니터링을 제공하지만 **GPU 모니터링은 제공하지 않는다.** 따라서 GPU관련 모듈을 설치하고 `Google Cloud Platform`으로 연결한다.
@@ -65,27 +67,14 @@ sudo reboot now # 재부팅을 하지 않으면 적용되지 않는다.
 
 각 VM에서 다음 요구사항이 충족되는지 확인합니다.
 
-
-<blockquote style="font-size:1rem;">
- <ul>
-    <li>각 VM에는 <a href="https://cloud.google.com/compute/docs/gpus/create-vm-with-gpus">GPU 연결</a>완료된 상태여야 합니다.</li>
-    <li>각 VM에는 <a href="https://cloud.google.com/compute/docs/gpus/nstall-drivers-gpu#install-gpu-driver">GPU 드라이버 설치</a>가 완료된 상태여야 합니다.</li>
-    <li>각 VM에는 Python 3.6 이상이 설치되어 있어야 합니다.</li>
-    <li>각 VM에는 Python 가상 환경을 만드는 데 필요한 패키지가 있어야 합니다.</li>
-  </ul>
-</blockquote>
-<!-- <blockquote style="font-size:1rem;"> -->
-
 <!-- <blockqutoe/> -->
-> test
-> * numbering
-> >test2
->> * number1
->> * number2
-> > > test3
-      >>> * numering
-      >>> * numbering2
+> * 각 VM에는 [GPU 연결](https://cloud.google.com/compute/docs/gpus/create-vm-with-gpus)완료된 상태여야 합니다.
+> * 각 VM에는 [GPU 드라이버 설치](https://cloud.google.com/compute/docs/gpus/nstall-drivers-gpu#install-gpu-driver)가 완료된 상태여야 합니다.
+> * 각 VM에는 Python 3.6 이상이 설치되어 있어야 합니다.
+> * 각 VM에는 Python 가상 환경을 만드는 데 필요한 패키지가 있어야 합니다.
 
+
+<br>
 
 ### 에이전트 다운로드
 
