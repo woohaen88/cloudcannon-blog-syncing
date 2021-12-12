@@ -23,6 +23,27 @@ image: /uploads/gcp.png
 <br>
 
 
+<table style="border-collapse: collapse; width: 100%;" border="1" data-ke-align="alignLeft">
+<tbody>
+<tr>
+<td style="width: 16.6667%;">class</td>
+<td style="width: 16.6667%;">images</td>
+<td style="width: 16.6667%;">class</td>
+<td style="width: 16.6667%;">images</td>
+<td style="width: 16.6667%;">class</td>
+<td style="width: 16.6667%;">images</td>
+</tr>
+<tr>
+<td style="width: 16.6667%;">Apple_scab</td>
+<td style="width: 16.6667%;">630</td>
+<td style="width: 16.6667%;">Corn</td>
+<td style="width: 16.6667%;">1,162</td>
+<td style="width: 16.6667%;">Septoria_leaf</td>
+<td style="width: 16.6667%;">1,771</td>
+</tr>
+</tbody>
+</table>
+
 |제목|내용|설명|
 |------|---|---|
 |테스트1|테스트2|테스트3|
