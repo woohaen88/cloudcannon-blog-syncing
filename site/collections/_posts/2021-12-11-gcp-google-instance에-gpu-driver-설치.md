@@ -5,51 +5,20 @@ description: 구글 GCP VM에서 GPU드라이버를 설치
 tags:
   - gcp
   - GPU monitoring
-image: /uploads/gcp.png
+image: /uploads/gcp-1.png
 ---
-
-
 **지원되는 운영체제**
 
 해당 VM은 Ubuntu 18.04 LTS 버전에서 설치하였다. `google cloud console`에서 `ssh`를 눌러 `google cloud terminal`을 연다.
 
-<figure style="text-align:center;">
-  <img src="/uploads/7.png" width="2940" height="512">
-  <figcaption>
-    Figure 1. Google Cloud Console
-  </figcaption>
-</figure>
+<figure style="text-align:center;"><img width="2940" height="512" src="/uploads/7.png" /><figcaption>Figure 1. Google Cloud Console</figcaption></figure>
 
-<br>
+&nbsp;
 
+| class | images | class | images | class | images |
+| Apple\_scab | 630 | Corn | 1,162 | Septoria\_leaf | 1,771 |
 
-<table style="border-collapse: collapse; width: 100%;" border="1" data-ke-align="alignLeft">
-<tbody>
-<tr>
-<td style="width: 16.6667%;">class</td>
-<td style="width: 16.6667%;">images</td>
-<td style="width: 16.6667%;">class</td>
-<td style="width: 16.6667%;">images</td>
-<td style="width: 16.6667%;">class</td>
-<td style="width: 16.6667%;">images</td>
-</tr>
-<tr>
-<td style="width: 16.6667%;">Apple_scab</td>
-<td style="width: 16.6667%;">630</td>
-<td style="width: 16.6667%;">Corn</td>
-<td style="width: 16.6667%;">1,162</td>
-<td style="width: 16.6667%;">Septoria_leaf</td>
-<td style="width: 16.6667%;">1,771</td>
-</tr>
-</tbody>
-</table>
-
-|제목|내용|설명|
-|------|---|---|
-|테스트1|테스트2|테스트3|
-|테스트1|테스트2|테스트3|
-|테스트1|테스트2|테스트3|
-구글 VM 할당 후 터미널에서 다음을 입력한다.
+\|제목\|내용\|설명\| \|——\|—\|—\| \|테스트1\|테스트2\|테스트3\| \|테스트1\|테스트2\|테스트3\| \|테스트1\|테스트2\|테스트3\| 구글 VM 할당 후 터미널에서 다음을 입력한다.
 
 1\. Python 3이 운영체제에 설치되어 있는지 확인
 
