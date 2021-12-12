@@ -3,7 +3,9 @@ date: 2021-12-11 00:00:00
 title: GCP google instance에 GPU Driver 설치
 description: 구글 GCP VM에서 GPU드라이버를 설치
 tags:
-image:
+  - gcp
+  - GPU monitoring
+image: /uploads/gcp.png
 ---
 &nbsp;
 
@@ -15,14 +17,19 @@ image:
 
 1\. Python 3이 운영체제에 설치되어 있는지 확인
 
-
 2\. 설치 스크립트를 다운로드
 
-```curl https://raw.githubusercontent.com/GoogleCloudPlatform/compute-gpu-installation/main/linux/install\_gpu\_driver.py –output install\_gpu\_driver.py```
+`curl https://raw.githubusercontent.com/GoogleCloudPlatform/compute-gpu-installation/main/linux/install\_gpu\_driver.py –output install\_gpu\_driver.py`
 
 3\. 설치 스크립트를 실행
 
-```sudo python3 install\_gpu\_driver.py```
+`sudo python3 install\_gpu\_driver.py`
+
+![](/uploads/7.png){: width="2940" height="512"}
+
+&nbsp;
+
+![](/uploads/6.png){: width="1800" height="1412"}
 
 설치 참조: [https://cloud.google.com/compute/docs/gpus/install-drivers-gpu](https://cloud.google.com/compute/docs/gpus/install-drivers-gpu)
 
@@ -30,7 +37,7 @@ image:
 
 에러: NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.
 
-``` bash
+```bash
 sudo apt --installed list | grep nvidia-driver
 nvidia-driver-495/unknown,now 495.29.05-0ubuntu1 amd64 [installed,automatic]
 sudo apt remove nvidia-driver-49
@@ -69,15 +76,14 @@ sudo reboot now
 
 [virtualenv 사용](https://cloud.google.com/compute/docs/gpus/monitor-gpus#virtualenv-%EC%82%AC%EC%9A%A9)[pipenv 사용](https://cloud.google.com/compute/docs/gpus/monitor-gpus#pipenv-%EC%82%AC%EC%9A%A9)
 
-virtualenv 및&nbsp;pip를 사용하는 경우 가상 환경을 만들어야 합니다. 환경을 만들려면 다음 명령어를 실행합니다.
+virtualenv 및 pip를 사용하는 경우 가상 환경을 만들어야 합니다. 환경을 만들려면 다음 명령어를 실행합니다.
+
 ```bash
 cd /opt/google/compute-gpu-monitoring/linux
 sudo apt-get -y install python3-venv
 sudo python3 -m venv venv
 sudo venv/bin/pip install wheel sudo venv/bin/pip install -Ur requirements.txt
 ```
-
-
 
 ### 시스템 부팅 시 에이전트 시작
 
@@ -94,6 +100,25 @@ sudo venv/bin/pip install wheel
 sudo venv/bin/pip install -Ur requirements.txt
 ```
 
+## &nbsp;
+
+## &nbsp;
+
+## ![](/uploads/3.png){: width="4096" height="2560"}
+
+&nbsp;
+
+![](/uploads/4.png){: width="4096" height="2560"}
+
+&nbsp;
+
+![](/uploads/5.png){: width="4096" height="2560"}
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 ## Cloud Monitoring에서 측정항목 검토
 
@@ -101,8 +126,7 @@ sudo venv/bin/pip install -Ur requirements.txt
 2. **리소스 유형**&nbsp;드롭다운에서&nbsp;**VM 인스턴스**를 선택합니다.
 3. **측정항목**&nbsp;드롭다운에서 custom/instance/gpu/utilization을 입력합니다.
 
-   **참고:**&nbsp;커스텀 측정항목이 표시되는 데 다소 시간이 걸릴 수 있습니다.
-   다음 결과와 유사한 GPU 사용률이 나옵니다.
+   **참고:**&nbsp;커스텀 측정항목이 표시되는 데 다소 시간이 걸릴 수 있습니다. 다음 결과와 유사한 GPU 사용률이 나옵니다.
 
 ## 다음 단계
 
