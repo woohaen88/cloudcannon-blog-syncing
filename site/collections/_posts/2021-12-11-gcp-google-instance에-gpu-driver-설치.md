@@ -63,13 +63,21 @@ sudo reboot now # 재부팅을 하지 않으면 적용되지 않는다.
 
 각 VM에서 다음 요구사항이 충족되는지 확인합니다.
 
+
 <blockquote style="font-size:1rem;">
-* 각 VM에는&nbsp;[GPU 연결](https://cloud.google.com/compute/docs/gpus/create-vm-with-gpus)
+  <p>
+  
+  * 각 VM에는&nbsp;[GPU 연결](https://cloud.google.com/compute/docs/gpus/create-vm-with-gpus)
 완료된 상태여야 합니다.
 * 각 VM에는&nbsp;[GPU 드라이버 설치](https://cloud.google.com/compute/docs/gpus/nstall-drivers-gpu#install-gpu-driver)가 완료된 상태여야 합니다.
 * 각 VM에는 Python 3.6 이상이 설치되어 있어야 합니다.
 * 각 VM에는 Python 가상 환경을 만드는 데 필요한 패키지가 있어야 합니다.
-<blockquote/>
+  </p>
+</blockquote>
+<!-- <blockquote style="font-size:1rem;"> -->
+>
+<!-- <blockqutoe/> -->
+
 
 
 ### 에이전트 다운로드
