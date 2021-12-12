@@ -7,12 +7,27 @@ tags:
   - GPU monitoring
 image: /uploads/gcp.png
 ---
-&nbsp;
+
 
 **지원되는 운영체제**
 
-해당 VM은 Ubuntu 18.04 LTS 버전에서 설치하였다.&nbsp;
+해당 VM은 Ubuntu 18.04 LTS 버전에서 설치하였다. `google cloud console`에서 `ssh`를 눌러 `google cloud terminal`을 연다.
 
+<figure style="text-align:center;">
+  <img src="/uploads/7.png" width="2940" height="512">
+  <figcaption>
+    Figure 1. Google Cloud Console
+  </figcaption>
+</figure>
+
+<br>
+
+
+|제목|내용|설명|
+|------|---|---|
+|테스트1|테스트2|테스트3|
+|테스트1|테스트2|테스트3|
+|테스트1|테스트2|테스트3|
 구글 VM 할당 후 터미널에서 다음을 입력한다.
 
 1\. Python 3이 운영체제에 설치되어 있는지 확인
