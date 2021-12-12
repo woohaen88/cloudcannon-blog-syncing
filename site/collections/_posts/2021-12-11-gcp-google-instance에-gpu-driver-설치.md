@@ -15,17 +15,14 @@ image:
 
 1\. Python 3이 운영체제에 설치되어 있는지 확인
 
-사전설치
-
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86\_64/cuda-ubuntu1804.pinsudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86\_64/7fa2af80.pubsudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86\_64/ /"sudo apt-get updatesudo apt-get -y install cuda
 
 2\. 설치 스크립트를 다운로드
 
-\`\`\`curl https://raw.githubusercontent.com/GoogleCloudPlatform/compute-gpu-installation/main/linux/install\_gpu\_driver.py –output install\_gpu\_driver.py\`\`\`
+```curl https://raw.githubusercontent.com/GoogleCloudPlatform/compute-gpu-installation/main/linux/install\_gpu\_driver.py –output install\_gpu\_driver.py```
 
 3\. 설치 스크립트를 실행
 
-\`\`\`sudo python3 install\_gpu\_driver.py\`\`\`
+```sudo python3 install\_gpu\_driver.py```
 
 설치 참조: [https://cloud.google.com/compute/docs/gpus/install-drivers-gpu](https://cloud.google.com/compute/docs/gpus/install-drivers-gpu)
 
@@ -33,13 +30,12 @@ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86\_64
 
 에러: NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.
 
-sudo apt --installed list \| grep nvidia-driver
-
-nvidia-driver-495/unknown,now 495.29.05-0ubuntu1 amd64 \[installed,automatic\]
-
+``` bash
+sudo apt --installed list | grep nvidia-driver
+nvidia-driver-495/unknown,now 495.29.05-0ubuntu1 amd64 [installed,automatic]
 sudo apt remove nvidia-driver-49
-
 sudo reboot now
+```
 
 &nbsp;
 
@@ -74,16 +70,14 @@ sudo reboot now
 [virtualenv 사용](https://cloud.google.com/compute/docs/gpus/monitor-gpus#virtualenv-%EC%82%AC%EC%9A%A9)[pipenv 사용](https://cloud.google.com/compute/docs/gpus/monitor-gpus#pipenv-%EC%82%AC%EC%9A%A9)
 
 virtualenv 및&nbsp;pip를 사용하는 경우 가상 환경을 만들어야 합니다. 환경을 만들려면 다음 명령어를 실행합니다.
-
+```bash
 cd /opt/google/compute-gpu-monitoring/linux
-
-&nbsp;
-
 sudo apt-get -y install python3-venv
-
 sudo python3 -m venv venv
-
 sudo venv/bin/pip install wheel sudo venv/bin/pip install -Ur requirements.txt
+```
+
+
 
 ### 시스템 부팅 시 에이전트 시작
 
@@ -93,15 +87,13 @@ sudo venv/bin/pip install wheel sudo venv/bin/pip install -Ur requirements.txt
 
 google\_gpu\_monitoring\_agent\_venv.service 파일에는 virtualenv를 사용한 설치를 위해 준비된 systemd에 대한 서비스 정의가 포함되어 있습니다.
 
+```bash
 cd /opt/google/compute-gpu-monitoring/linux
-
-sudo apt-get -y install python3-venv
-
 sudo python3 -m venv venv
-
 sudo venv/bin/pip install wheel
-
 sudo venv/bin/pip install -Ur requirements.txt
+```
+
 
 ## Cloud Monitoring에서 측정항목 검토
 
