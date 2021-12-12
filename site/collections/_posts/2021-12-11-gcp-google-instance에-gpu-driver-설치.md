@@ -5,7 +5,7 @@ description: 구글 GCP VM에서 GPU드라이버를 설치
 tags:
   - gcp
   - GPU monitoring
-image: /uploads/gcp-1.png
+image: /images/mount-google-storage-into-gcp-vm/google_cloud_logo.png
 ---
 
 ## 1. GCP-VM에 GPU 설치
