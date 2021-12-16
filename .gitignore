@@ -188,3 +188,21 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,jekyll,visualstudiocode
 site/collections/_posts/Demo.md
+
+# demo file
+site/collections/_projects/2021-01-15-desk-setup.md
+site/collections/_projects/2021-01-14-prague-city.md
+site/collections/_projects/2021-01-12-sea-and-rest.md
+site/collections/_projects/2021-01-11-mountains.md
+site/collections/_projects/2021-01-10-big-airplane.md
+site/collections/_projects/2021-01-09-the-rocks.md
+site/collections/_projects/2021-01-08-quiet-lake.md
+site/collections/_projects/2021-01-06-antelope-anyon.md
+site/collections/_projects/_defaults.md
+
+# demo post file
+site/collections/_posts/_defaults.md
+site/collections/_posts/2018-11-12-test.markdown
+site/collections/_posts/2021-12-11-test2.markdown
+site/collections/_posts/2021-12-11-작물-잎-사진으로-질병-분류하기.md
+site/collections/_posts/2021-12-11-제목을-한글로.markdown

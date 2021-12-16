@@ -39,7 +39,7 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 2. 사용 가능한 패키지 목록을 업데이트 하고 gcsfuse를 설치한다.
 ```bash
 sudo apt-get update
-sudo apt-get install gcsfuse
+sudo apt-get -y install gcsfuse
 ```
 
 3. gcsfuse에 대한 향후 업데이트는 다음과 같은 일반적인 방법으로 설치할 수 있다. 
@@ -59,7 +59,7 @@ gcloud auth login
 <h3>버킷마운트</h3>
 ```bash
 mkdir -p /path/to/mount/point
-gcsfuse {google_cloud_bucket} /path/to/mount/point --implicit-dirs
+gcsfuse --implicit-dirs {google_cloud_bucket} /path/to/mount/point
 ```
 
 gcsfuse 를 이용하면 google cloud storage 를 파일시스템으로 mount를 시킬 수 있다. 이 때 중요한 것은 --implicit-dirs 옵션을 붙여주여야 디렉토리 구조가 보인다는 것이다.
