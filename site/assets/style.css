@@ -2,3 +2,25 @@ blockquote {
     font-size: 1rem;
 }
 
+.shadow-grey {
+    background-color: #d9d9d9;
+}
+
+.shadow-grey.blue {
+    color: #003687;
+}
+
+body {
+    background-color: #ffffff
+}
+
+div.post-top {
+    width: 100%;
+    text-align: center;
+}
+
+
+.align_c{text-align: center; width: 100%;padding-bottom: 2rem;}
+.align_c img{width: 100%}
+
+.post__meta{float: right;}
