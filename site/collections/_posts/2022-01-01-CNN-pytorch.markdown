@@ -8,12 +8,6 @@ tags:
   - CNN
 image: /images/posts/06_cnn_pytorch/thumbnail.png
 ---
-<<<<<<< HEAD
-
-[project URL:https://github.com/woohaen88/PyTorchCNN/tree/main/training_convolutional_neural_network](https://github.com/woohaen88/PyTorchCNN/tree/main/training_convolutional_neural_network)
-
-=======
->>>>>>> a6b2697df43ddc5b3d6327f45b3cefd970d4e80c
 이번 포스트에서는 CNN학습을 어떻게 하고, 손으로 쓴 히라가나 글씨를 분류하는 것을 목표로한다. 일반적으로 알다시피 숫자형 데이터와는 다르지만 그렇다고 해서 PyTorch에서 구현하는 모델링을 하고 분류하는 방법자체가 많이 달라지지 않는다. 여전히 우리는 이러한 단계를 따른다.
 
 1. 모델 아키텍쳐 정의
@@ -143,13 +137,7 @@ class LeNet(Module):
 
 ***이중 가장 좋은 점은 우리가 올바르게 모델 아키텍쳐를 정의하기만 하면 파이토치는 자동적으로 자동 미분과 역전파를 수행한다.***
 
-<<<<<<< HEAD
 <span class="shadow-grey">LeNet</span>클래스는 2가지 변수를 받는다.
-1. <span class="shadow-grey">numChannels</span>: input이미지의 채널수(1: grayscale, 3: RGB)
-2. <span class="shadow-grey">classes</span>: 중복이 되지 않는 데이터셋의 고유 클래스
-=======
-<span class="shadow-grey">LeNet</span>클래스는 2가지 변수를 받난다.
->>>>>>> a6b2697df43ddc5b3d6327f45b3cefd970d4e80c
 
 1. <span class="shadow-grey">numChannels</span>\: input이미지의 채널수(1: grayscale, 3: RGB)
 2. <span class="shadow-grey">classes</span>\: 중복이 되지 않는 데이터셋의 고유 클래스
