@@ -1,13 +1,13 @@
 ---
 date: 2022-01-01 00:02:00
 title: PyTorch-Training first Convolutional Neural Network (CNN)
-description: 객체 지향 프로그래밍에서 자체 신경망 계층을 만들어서 재사용하거나 더 복잡한 신경망을 만드는 방법
+description: pytorch에서 KMNIST를 불러와서 이미지를 불러오고, opencv를 이용하여 간단한 시각화를 해본다.
 tags:
-- pytorch
-- Module
+  - pytorch
+  - Module
+  - CNN
 image: /images/posts/06_cnn_pytorch/thumbnail.png
 ---
-
 이번 포스트에서는 CNN학습을 어떻게 하고, 손으로 쓴 히라가나 글씨를 분류하는 것을 목표로한다. 일반적으로 알다시피 숫자형 데이터와는 다르지만 그렇다고 해서 PyTorch에서 구현하는 모델링을 하고 분류하는 방법자체가 많이 달라지지 않는다. 여전히 우리는 이러한 단계를 따른다.
 
 1. 모델 아키텍쳐 정의
@@ -16,11 +16,11 @@ image: /images/posts/06_cnn_pytorch/thumbnail.png
 4. 손실함수를 계산
 5. 미분계수를 0으로 만들고, 역전파를 실행 그리고 나서 모델 파라미터를 업데이트한다.
 
-데이터셋을 쉽게 다루게 해주는 <span style="background: #d9d9d9">DataLoader</span>를 로드한다. 이 <span style="background: #d9d9d9">DataLoader</span>는 PyTorch를 사용하는데 있어서 아주 중요한 skill이다. 
+데이터셋을 쉽게 다루게 해주는 DataLoader를 로드한다. 이 DataLoader는 PyTorch를 사용하는데 있어서 아주 중요한 skill이다.
 
-## 1. Training Convolutional Neural Network(CNN)
+## 1\. Training Convolutional Neural Network(CNN)
 
-CNN을 구성하기 위해서는 필수 라이브러리가 필요하다. 바로 <span style="background: #d9d9d9">torch</span>와 <span style="background: #d9d9d9">torchvision</span>이다. 그리고 데이터분할을 손쉽게 다루는 <span style="background: #d9d9d9">scikit-learn</span>와 이미지 그래픽을 위한 <span style="background: #d9d9d9">opencv</span>또한 설치하도록 하자.
+CNN을 구성하기 위해서는 필수 라이브러리가 필요하다. 바로 torch와 torchvision이다. 그리고 데이터분할을 손쉽게 다루는 scikit-learn와 이미지 그래픽을 위한 opencv또한 설치하도록 하자.
 
 ```bash
 $ pip install torch torchvision
@@ -28,13 +28,14 @@ $ pip install opencv-contrib-python
 $ pip install scikit-learn
 $ pip install imutils
 ```
+
 <br>
 
-
 ### The KMNIST dataset
+
 <figure style="text-align: center">
-<img src="/images/posts/06_cnn_pytorch/kmnist_dataset.png" width="100%">
-	<span style="font-size: 0.8em; color:gray;" ><figcaption align="center">
+<img src="/images/posts/06_cnn_pytorch/kmnist_dataset.png" width="100%" />
+	<span style="font-size: 0.8em; color:gray;"><figcaption align="center">
 		Figure 1: The KMNIST dataset
 	</figcaption></span>
 </figure>
@@ -59,29 +60,30 @@ $ tree . --dirsfirst
 2 directories, 6 files
 ```
 
-
 가장 먼저 살펴볼 script는 다음과 같다.
-1. <span style="background: #d9d9d9">lenet.py</span> : 유명한 LeNet architecture
-2. <span style="background: #d9d9d9">train.py</span> : KMNIST를 훈련하는 script
-3. <span style="background: #d9d9d9">predict.py</span> : train model을 로드하고, 스크린에 결과를 보여준다.
+
+1. lenet.py : 유명한 LeNet architecture
+2. train.py : KMNIST를 훈련하는 script
+3. predict.py : train model을 로드하고, 스크린에 결과를 보여준다.
 
 `output` 디렉터리에는 `plot.png`(training/validation loss and accuracy)와 `model.pth`가 만들어진다.
 
-## 2. Implementing a Convolutional Neural Network(CNN)
+## 2\. Implementing a Convolutional Neural Network(CNN)
+
 <figure style="text-align: center">
-<img src="/images/posts/06_cnn_pytorch/Implementing_a_convnet.png" width="100%">
-	<span style="font-size: 0.8em; color:gray;" ><figcaption align="center">
+<img src="/images/posts/06_cnn_pytorch/Implementing_a_convnet.png" width="100%" />
+	<span style="font-size: 0.8em; color:gray;"><figcaption align="center">
 		Figure 2: The LeNet architecture
 	</figcaption></span>
 </figure>
 
 Lenet 아키텍쳐는 다음과 같은 Layer 구조를 따른다.
-<blockquote class="shadow-grey">
-(CONV => RELU => POOL) * 2 => FC => RELU => FC => SOFTMAX
-</blockquote>
 
+> (CONV =&gt; RELU =&gt; POOL) \* 2 =&gt; FC =&gt; RELU =&gt; FC =&gt; SOFTMAX
+{: .shadow-grey}
 
 CNN을 구현해보자. 첫번째로 먼저 필요한 라이브러리를 import 한다.
+
 ```python
 # import the necessary packages
 from torch.nn import Module
@@ -94,11 +96,11 @@ from torch import flatten
 from tqdm import tqdm
 ```
 
-* <span class="shadow-grey">Module</span>: <span class="shadow-grey">Sequential</span>을 사용하기보다는 <span class="shadow-grey">Module</span> 의 서브클래스를 불러와서 사용한다.
-* <span class="shadow-grey">Conv2d</span>: PyTorch의 CNN Layer
-* <span class="shadow-grey">Linear</span>: Fully connected Layer
-* <span class="shadow-grey">MaxPool2d</span>: 2D max-pooling을 적용
-* <span class="shadow-grey">ReLU</span>: ReLU 활성화함수
+* <span class="shadow-grey">Module</span>\: <span class="shadow-grey">Sequential</span>을 사용하기보다는 <span class="shadow-grey">Module</span> 의 서브클래스를 불러와서 사용한다.
+* <span class="shadow-grey">Conv2d</span>\: PyTorch의 CNN Layer
+* <span class="shadow-grey">Linear</span>\: Fully connected Layer
+* <span class="shadow-grey">MaxPool2d</span>\: 2D max-pooling을 적용
+* <span class="shadow-grey">ReLU</span>\: ReLU 활성화함수
 
 ```python
 class LeNet(Module):
@@ -133,15 +135,16 @@ class LeNet(Module):
 * 사용자 정의 함수나 subnetwork/components를 쉽게 만들 수 있다.
 * 사용자 정의 함수로 <span class="shadow-grey">forward</span>를 만들 수 있다.
 
-***이중 가장 좋은 점은 우리가 올바르게 모델 아키텍쳐를 정의하기만 하면 파이토치는 자동적으로 자동 미분과 역전파를 수행한다.*** 
+***이중 가장 좋은 점은 우리가 올바르게 모델 아키텍쳐를 정의하기만 하면 파이토치는 자동적으로 자동 미분과 역전파를 수행한다.***
 
 <span class="shadow-grey">LeNet</span>클래스는 2가지 변수를 받난다.
-1. <span class="shadow-grey">numChannels</span>: input이미지의 채널수(1: grayscale, 3: RGB)
-2. <span class="shadow-grey">classes</span>: 중복이 되지 않는 데이터셋의 고유 클래스
 
-위 코드는 <span class="shadow-grey">CONV => RELU => POOL</span> 레이어를 초기화한다. 첫 번재 CONV ㄹ이어는 총 5x5로 이루어진 20개의 필터를 학습한다. 그리고 나서 이미지차원을 줄이기 위해 ReLU 활성화함수를 적용하고 그 후에는 2x2 max-pooling 레이어와 2x2 stride를 적용한다.
+1. <span class="shadow-grey">numChannels</span>\: input이미지의 채널수(1: grayscale, 3: RGB)
+2. <span class="shadow-grey">classes</span>\: 중복이 되지 않는 데이터셋의 고유 클래스
 
-그리고나서는 <span class="shadow-grey">CONV => RELU => POOL</span> 레이어를 또 한번 반복하는데 이때는 나머지는 그대로 두고 레이어 수가 50개로 증가한다.
+위 코드는 <span class="shadow-grey">CONV =&gt; RELU =&gt; POOL</span> 레이어를 초기화한다. 첫 번재 CONV ㄹ이어는 총 5x5로 이루어진 20개의 필터를 학습한다. 그리고 나서 이미지차원을 줄이기 위해 ReLU 활성화함수를 적용하고 그 후에는 2x2 max-pooling 레이어와 2x2 stride를 적용한다.
+
+그리고나서는 <span class="shadow-grey">CONV =&gt; RELU =&gt; POOL</span> 레이어를 또 한번 반복하는데 이때는 나머지는 그대로 두고 레이어 수가 50개로 증가한다.
 
 그 다음 스텝으로 우리는 완전 연결 레이어를 추가한다. 이 때 input은 800, output은 500으로 한다.
 
@@ -189,9 +192,9 @@ class LeNet(Module):
 		return output
 ```
 
-<span class="shadow-grey">forward</span>함수는 한개의 파라미터 <span class="shadow-grey">x</span>를 받아 들인다. 그리고 이 것은 network의 input데이터이다. 그리고 나서 <span class="shadow-grey">conv1</span>, <span class="shadow-grey">relu1</span>, <span class="shadow-grey">maxpool1</span>레이어를첫번째 등장하는 <span class="shadow-grey">CONV => RELU => POOL</span> 레이어에 연결한다.
+<span class="shadow-grey">forward</span>함수는 한개의 파라미터 <span class="shadow-grey">x</span>를 받아 들인다. 그리고 이 것은 network의 input데이터이다. 그리고 나서 <span class="shadow-grey">conv1</span>, <span class="shadow-grey">relu1</span>, <span class="shadow-grey">maxpool1</span>레이어를첫번째 등장하는 <span class="shadow-grey">CONV =&gt; RELU =&gt; POOL</span> 레이어에 연결한다.
 
-<span class="shadow-grey">CONV => RELU => POOL</span> 레이어는 다차원 텐서다. 완전연결레이어에 연결하기 위해서 <span class="shadow-grey">flatten</span>메서드를 사용해야한다. 
+<span class="shadow-grey">CONV =&gt; RELU =&gt; POOL</span> 레이어는 다차원 텐서다. 완전연결레이어에 연결하기 위해서 <span class="shadow-grey">flatten</span>메서드를 사용해야한다.
 
 이렇게 하기 위해서 우리는 <span class="shadow-grey">fc1</span>와 <span class="shadow-grey">relu3</span>레이어를 연결해야한다. 다음에는 <span class="shadow-grey">fc2</span>와 <span class="shadow-grey">logSoftmax</span>를 연결한다. <span class="shadow-grey">output</span>은 호출함수를 리턴한다.
 
@@ -223,7 +226,8 @@ import time
 
 <span class="shadow-grey">matplotlib</span>를 import하고 background engine을 "Agg"로 바꾼다.
 
-command line arguments는 다음과 같다. 
+command line arguments는 다음과 같다.
+
 ```python
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -235,10 +239,12 @@ args = vars(ap.parse_args())
 ```
 
 여기에서 우리는 2개의 arguments를 파싱한다.
-1. <span class="shadow-grey">-\-model</span> : 모델이 저장될 경로
-2. <span class="shadow-grey">-\-plot</span> : training history plot이 저장될 경로
+
+1. <span class="shadow-grey">--model</span> : 모델이 저장될 경로
+2. <span class="shadow-grey">--plot</span> : training history plot이 저장될 경로
 
 모델을 학습하기 위한 파라미터를 정의한다.
+
 ```python
 # define training hyperparameters
 INIT_LR = 1e-3
@@ -253,8 +259,7 @@ VAL_SPLIT = 1 - TRAIN_SPLIT
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 ```
 
-학습률, batch_size, epochf를 정의하고, train과 validation을 (4 : 1)로 분류한다.
-데이터셋을 다운 받자. 코드는 다음과 같다.
+학습률, batch\_size, epochf를 정의하고, train과 validation을 (4 : 1)로 분류한다. 데이터셋을 다운 받자. 코드는 다음과 같다.
 
 ```python
 # load the KMNIST dataset
@@ -283,7 +288,7 @@ trainSteps = len(trainDataLoader.dataset) // BATCH_SIZE
 valSteps = len(valDataLoader.dataset) // BATCH_SIZE
 ```
 
-<span class="shadow-grey">DataLoader</span> object는 훈련에서는 <span class="shadow-grey">shuffle=True</span>, 테스트에서는 <span class="shadow-grey">shuffle=False</span>로 설정한다. 
+<span class="shadow-grey">DataLoader</span> object는 훈련에서는 <span class="shadow-grey">shuffle=True</span>, 테스트에서는 <span class="shadow-grey">shuffle=False</span>로 설정한다.
 
 이제 LeNet을 초기화 하자.
 
@@ -313,10 +318,10 @@ startTime = time.time()
 
 위 코드는 우리의 <span class="shadow-grey">model</span>을ㄹ 초기화한다. KMNIST dataset이 grayscale이기 때문에 우리는 <span class="shadow-grey">numChannels=1</span>로 설정한다. 그리고 우리는 <span class="shadow-grey">datasest.classes</span>의 <span class="shadow-grey">classes</span>를 설정한다.
 
-
-optimizer와 loss function을 초기화한다. 우리는 <span class="shadow-grey">Adam optimizer</span>와 <span class="shadow-grey">negative log-likelihood</span>를 사용한다. 그리고 이 것을 <span class="shadow-grey">nn.NLLoss</span>와 <span class="shadow-grey">LogSoftmax</span>와 연결한다. 
+optimizer와 loss function을 초기화한다. 우리는 <span class="shadow-grey">Adam optimizer</span>와 <span class="shadow-grey">negative log-likelihood</span>를 사용한다. 그리고 이 것을 <span class="shadow-grey">nn.NLLoss</span>와 <span class="shadow-grey">LogSoftmax</span>와 연결한다.
 
 이제 모델 training을 해보자.
+
 ```python
 # loop over our epochs
 for e in tqdm(range(0, EPOCHS)):
@@ -355,17 +360,18 @@ for e in tqdm(range(0, EPOCHS)):
 ```
 
 이제 우리는 다음과 같은 절차를 따른다.
+
 1. model mode를 <span class="shadow-grey blue">train()</span> mode로 변경한다.
 2. 우리의 training loss와 validation loss를 현재 epoch에서 초기화한다.
 3. 현재 epoch에서 올바른 학습과 검증예측에대한 수를 초기화한다.
 
 이게 완료되었으면 다음 스텝으로 넘어간다.
+
 1. gradient를 0으로 만든다.
 2. 역전파를 수행한다.
 3. model weight를 업데이트한다.
 
-***위 단계를 꼭 기억하자!*** 위 스텝을 정확히 지키지 않으면 심각한 오류를 초래한다. 
-
+***위 단계를 꼭 기억하자\!*** 위 스텝을 정확히 지키지 않으면 심각한 오류를 초래한다.
 
 이제 우리의 모델을 검증데이터셋에서 평가한다.
 
@@ -390,7 +396,8 @@ with torch.no_grad():
 ```
 
 검증데이터셋에서 PyTorch 모델을 평가할 때는 다음을 명시하자.
-1. <span class="shadow-grey blue">torch.no_grad()</span>: 자동미분을 끈다.
+
+1. <span class="shadow-grey blue">torch.no_grad()</span>\: 자동미분을 끈다.
 2. model를 평가모드로 바꾼다. <span class="shadow-grey blue">model.eval()</span>
 
 ```python
@@ -417,6 +424,7 @@ print("Val loss: {:.6f}, Val accuracy: {:.4f}\n".format(
 ```
 
 위 코드블럭은 training과 validation loss의 평균을 계산한다. 훈련은 완료되었다.
+
 ```python
 # finish measuring how long training took
 endTime = time.time()
@@ -430,7 +438,7 @@ print("[INFO] evaluating network...")
 with torch.no_grad():
 	# set the model in evaluation mode
 	model.eval()
-	
+
 	# initialize a list to store our predictions
 	preds = []
 
@@ -472,7 +480,7 @@ torch.save(model, args["model"])
 
 그런 다음 PyTorch 모델 가중치를 디스크에 저장하기 위해 <span class="shadow-grey">torch.save</span>를 호출하여 디스크에서 로드하고 별도의 Python 스크립트에서 예측할 수 있다.
 
-전체적으로 이 스크립트를 검토하면 PyTorch가 훈련 루프에 대해 얼마나 더 많은 제어를 제공하는지 알 수 있다. 
+전체적으로 이 스크립트를 검토하면 PyTorch가 훈련 루프에 대해 얼마나 더 많은 제어를 제공하는지 알 수 있다.
 
 훈련 루프를 완전히 제어하고 사용자 지정 절차를 구현해야 하는 경우에 좋다.
 
@@ -544,17 +552,17 @@ weighted avg       0.95      0.95      0.95     10000
 ```
 
 <figure style="text-align: center">
-<img src="/images/posts/06_cnn_pytorch/plot.png" width="100%">
-	<span style="font-size: 0.8em; color:gray;" ><figcaption align="center">
+<img src="/images/posts/06_cnn_pytorch/plot.png" width="100%" />
+	<span style="font-size: 0.8em; color:gray;"><figcaption align="center">
 		Figure 3: Plotting our training history with PyTorch
 	</figcaption></span>
 </figure>
 
-CPU에서는 ≈160초 정도 걸리고 GPU에서는 ≈82초 걸린다.  
+CPU에서는 ≈160초 정도 걸리고 GPU에서는 ≈82초 걸린다.
 
 epoch의 마지막에서 우리는 99.67%의 정확도를 얻었다. 그리고 테스트셋에서는 98.01%의 결과를 얻었다.
 
-우리의 얕은 모델 구조(그러나 PyTorch에서 CNN을 사용하기에는 VGG나 ResNet과 같은 모델을 사용하면 더 높은 정확도를 얻을 수 있지만 이런 모델은 더 복잡하다)에서 테스트셋이 정확도가 ≈95% 정도 도달하게 되면 꽤 좋은 결과다. 
+우리의 얕은 모델 구조(그러나 PyTorch에서 CNN을 사용하기에는 VGG나 ResNet과 같은 모델을 사용하면 더 높은 정확도를 얻을 수 있지만 이런 모델은 더 복잡하다)에서 테스트셋이 정확도가 ≈95% 정도 도달하게 되면 꽤 좋은 결과다.
 
 그러나, 위 그림에서 보듯이 우리의 훈련 그래프는 꽤 smooth하다. 그리고 과대적합이 일어났는지를 입증해야 한다
 
@@ -562,6 +570,7 @@ epoch의 마지막에서 우리는 99.67%의 정확도를 얻었다. 그리고 �
 $ ls output/
 model.pth	plot.png
 ```
+
 <span class="shadow-grey">model.pth</span>파일은 우리가 훈련한 모델이고 disk에 저장된다. 그리고 예측할 때는 이 모델을 불러와서 사용한다.
 
 ## Implementing our PyTorch prediction script
@@ -583,13 +592,15 @@ import cv2
 ```
 
 필요한 라이브러리를 로드하고 코드의 재사용성을 위해 seed를 설정한다.
-* <span class="shadow-grey">DataLoader</span> : 우리의 KMNIST test 데이터를 사용한다.  
-* <span class="shadow-grey">Subset</span> : testing data  
-* <span class="shadow-grey">ToTensor</span> : PyTorch tensor로 변환한다.  
-* <span class="shadow-grey">KMNIST</span> : The Kuzushiji-MNIST dataset  
-* <span class="shadow-grey">cv2</span> : display를 위한 라이브러리  
+
+* <span class="shadow-grey">DataLoader</span> : 우리의 KMNIST test 데이터를 사용한다.
+* <span class="shadow-grey">Subset</span> : testing data
+* <span class="shadow-grey">ToTensor</span> : PyTorch tensor로 변환한다.
+* <span class="shadow-grey">KMNIST</span> : The Kuzushiji-MNIST dataset
+* <span class="shadow-grey">cv2</span> : display를 위한 라이브러리
 
 command line arguments를 parsing한다.
+
 ```python
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -598,8 +609,7 @@ ap.add_argument("-m", "--model", type=str, required=True,
 args = vars(ap.parse_args())
 ```
 
-여기서는 우리는 1개의 argument만 사용한다. 
-<span class="shadow-grey">-\-model</span> : 우리가 훈련한 모델 객체이다.
+여기서는 우리는 1개의 argument만 사용한다. <span class="shadow-grey">--model</span> : 우리가 훈련한 모델 객체이다.
 
 ```python
 # set the device we will be using to test the model
@@ -619,6 +629,7 @@ testDataLoader = DataLoader(testData, batch_size=1)
 model = torch.load(args["model"]).to(device)
 model.eval()
 ```
+
 KMNIST 데이터 세트에서 테스트 데이터를 로드한다. 우리는 Subset 클래스를 사용하여 이 데이터 세트의 총 10개의 이미지를 무작위로 샘플링한다.
 
 모델을 통해 테스트 데이터의 하위 집합을 전달하기 위해 DataLoader가 생성한다.
@@ -635,11 +646,11 @@ with torch.no_grad():
 		# grab the original image and ground truth label
 		origImage = image.numpy().squeeze(axis=(0, 1))
 		gtLabel = testData.dataset.classes[label.numpy()[0]]
-        
+
 		# send the input to the device and make predictions on it
 		image = image.to(device)
 		pred = model(image)
-        
+
 		# find the class label index with the largest corresponding
 		# probability
 		idx = pred.argmax(axis=1).cpu().numpy()[0]
@@ -701,12 +712,11 @@ KMNIST 데이터 세트의 각 이미지는 단일 채널 회색조 이미지입
 [INFO] ground truth label: na, predicted label: na
 [INFO] ground truth label: ki, predicted label: ki
 [INFO] ground truth label: tsu, predicted label: tsu
-
 ```
 
 <figure style="text-align: center">
-<img src="/images/posts/06_cnn_pytorch/predict_handwritten_characters.png" width="100%">
-	<span style="font-size: 0.8em; color:gray;" ><figcaption align="center">
+<img src="/images/posts/06_cnn_pytorch/predict_handwritten_characters.png" width="100%" />
+	<span style="font-size: 0.8em; color:gray;"><figcaption align="center">
 		Figure 4: Making predictions on handwritten characters using PyTorch and our trained CNN
 	</figcaption></span>
 </figure>
