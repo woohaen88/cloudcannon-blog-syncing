@@ -24,3 +24,8 @@ div.post-top {
 .align_c img{width: 100%}
 
 .post__meta{float: right;}
+
+span.note{
+    color: darkgray;
+    font-size: 0.8rem;    
+}
